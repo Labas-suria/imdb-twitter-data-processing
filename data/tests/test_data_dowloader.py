@@ -6,7 +6,7 @@ import requests
 
 import data
 from data.downloader import Downloader
-from utils.mock_response import MockResponse
+from utils.test.mock_request_response import MockRequestResponse
 
 ROOT_PATH = os.path.dirname(data.__file__).removesuffix('data')
 
@@ -21,9 +21,9 @@ def mocked_requests_get(url, **kwargs):
     """Method responsible for simulating request.get method behaviors"""
 
     if url == 'https://path/txt':
-        return MockResponse('txt', 200)
+        return MockRequestResponse('txt', 200)
     if url == 'https://path/csv':
-        return MockResponse('csv', 200)
+        return MockRequestResponse('csv', 200)
     if url == 'https://path/timeout/txt':
         raise requests.exceptions.Timeout
 
@@ -39,8 +39,8 @@ class TestDownloaderClass(unittest.TestCase):
         """Asserts the download method works correctly when data will not be saved."""
 
         with patch('requests.get', side_effect=mocked_requests_get):
-            exce_downloader = Downloader(EXCEPT_DATA_SOURCE_SINGLE)
-            self.assertRaises(Exception, exce_downloader.download)
+            except_downloader = Downloader(EXCEPT_DATA_SOURCE_SINGLE)
+            self.assertRaises(Exception, except_downloader.download)
 
             downloader = Downloader(GOOD_DATA_SOURCE_SINGLE)
             returned = downloader.download()

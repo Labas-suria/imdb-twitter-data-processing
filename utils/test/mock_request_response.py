@@ -1,4 +1,4 @@
-class MockResponse:
+class MockRequestResponse:
     """Class responsible for simulating a response to request.get method"""
 
     def __init__(self, data, status_code, reason=""):
