@@ -17,3 +17,4 @@ IMDB_SOURCE = {
 if __name__ == '__main__':
     downloader = Downloader(IMDB_SOURCE, save_data=True)
     s3 = S3()
+    
